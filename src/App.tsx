@@ -17,8 +17,8 @@ function App() {
   const [sats1, setSats1] = useState('' as any);
   const [brl1, setBrl1] = useState('' as any);
 
-  const getData = () => {
-
+  useEffect(() => {
+    // getData();
     if (!brl) setBrl(0);
     if (!sats1) setSats1(0);
 
@@ -47,15 +47,7 @@ function App() {
 
         const btcConvert1 = parseInt(brl1) / parseFloat(data.price)
         setBtc1(btcConvert1.toFixed(8))
-
       })
-  }
-
-  useEffect(() => {
-    getData();
-    setInterval(() => {
-      getData();
-    }, 60000)
 
     const now = new Date();
     const year = now.getFullYear();
@@ -71,7 +63,6 @@ function App() {
   }, [cotacaoFormatado, cotacao,
     btc, sats, brl,
     btc1, sats1, brl1,
-    getData
   ]);
 
   function maskNumber(num: number | string, separator: string = '.'): string {
