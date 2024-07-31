@@ -4,5 +4,10 @@
   /* margin-bottom: 1vh; */
   display: flex;
   justify-content: center;
-  color: black;
+  color: white;
+}
+
+.color{
+  background-color: white;
+  color: white;
 }
