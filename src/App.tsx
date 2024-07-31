@@ -63,7 +63,7 @@ function App() {
     const day = now.getDate();
     const hours = now.getHours();
     const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
+    // const seconds = now.getSeconds();
 
     const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
     setTime(timer)
@@ -71,6 +71,7 @@ function App() {
   }, [cotacaoFormatado, cotacao,
     btc, sats, brl,
     btc1, sats1, brl1,
+    getData
   ]);
 
   function maskNumber(num: number | string, separator: string = '.'): string {
