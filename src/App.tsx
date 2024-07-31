@@ -83,7 +83,7 @@ function App() {
           value={cotacaoFormatado}
           InputLabelProps={{ shrink: true }}
         />
-        || {time}
+        ||| {time}
       </div>
       <div className={styles.section}>
         <TextField
