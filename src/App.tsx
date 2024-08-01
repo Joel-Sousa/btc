@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Tooltip } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
 
 function App() {
@@ -85,6 +85,7 @@ function App() {
           type='text'
           value={cotacaoFormatado}
           InputLabelProps={{ shrink: true }}
+          title='Cotação atual do Bitcoin'
         />
         &nbsp;
         <TextField
@@ -98,9 +99,11 @@ function App() {
 
       </div>
       <div className={styles.section}>
+      <Tooltip title="Atualizar Cotação" placement="left">
         <Button variant="contained" onClick={() => window.location.reload()}>
           <LoopIcon />
         </Button>
+      </Tooltip>
       </div>
       <div className={styles.section}>
         <TextField
@@ -111,6 +114,7 @@ function App() {
           type='number'
           onChange={(e) => setBrl(e.target.value)}
           InputLabelProps={{ shrink: true }}
+          title='Quantidade em Reais'
         />
         &nbsp;
         <TextField
@@ -121,6 +125,7 @@ function App() {
           type='number'
           onChange={(e) => setSats1(e.target.value)}
           InputLabelProps={{ shrink: true }}
+          title='Quantidade em Satoshis'
         />
       </div>
       <div className={styles.section}>
@@ -131,6 +136,7 @@ function App() {
           type='text'
           value={sats}
           InputLabelProps={{ shrink: true }}
+          title='Conversão de Reais para Satoshis'
         />
         &nbsp;
         <TextField
@@ -140,6 +146,7 @@ function App() {
           type='text'
           InputLabelProps={{ shrink: true }}
           value={brl1}
+          title='Conversão de Satoshis para Reais'
         />
       </div>
       <div className={styles.section}>
@@ -150,6 +157,7 @@ function App() {
           type='text'
           value={btc}
           InputLabelProps={{ shrink: true }}
+          title='Conversão de Satoshis para Bitcoin'
         />
         &nbsp;
         <TextField
@@ -159,6 +167,7 @@ function App() {
           type='text'
           value={btc1}
           InputLabelProps={{ shrink: true }}
+          title='Conversão de Reais para Bitcoin'
         />
       </div>
     </div>
