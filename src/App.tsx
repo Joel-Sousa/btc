@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
 import { Button, TextField, Tooltip } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
-import ClearIcon from '@mui/icons-material/Clear';
 
 function App() {
 
@@ -103,7 +102,6 @@ function App() {
           value={time}
           InputLabelProps={{ shrink: true }}
           />
-
       </div>
       <div className={styles.section}>
         <Tooltip title="Atualizar Cotação" placement="left">
