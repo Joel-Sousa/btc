@@ -64,7 +64,7 @@ function App() {
     setTime(timer)
 
   }, [
-    cotacaoFormatado, 
+    cotacaoFormatado, cotacao,
     brl, sats1
   ]);
 
