@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
 import { Button, TextField, Tooltip } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
+import ClearIcon from '@mui/icons-material/Clear';
 
 function App() {
 
@@ -101,7 +102,7 @@ function App() {
           type='text'
           value={time}
           InputLabelProps={{ shrink: true }}
-        />
+          />
 
       </div>
       <div className={styles.section}>
@@ -116,7 +117,7 @@ function App() {
           className={styles.color}
           label="BRL"
           variant="filled"
-          type='search'
+          type='number'
           onChange={(e) => setBrl(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
           title='Quantidade em Reais'
@@ -126,7 +127,7 @@ function App() {
           className={styles.color}
           label="Sats"
           variant="filled"
-          type='search'
+          type='number'
           onChange={(e) => setSats1(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
           title='Quantidade em Satoshis'
