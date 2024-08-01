@@ -24,6 +24,7 @@ function App() {
     if (!sats1) setSats1(0);
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
+    // fetch('')
       .then((response) => response.json())
       .then((data) => {
 
@@ -44,9 +45,10 @@ function App() {
         // brl
         const valorEmBTC = sats1 / 100000000;
         const valorEmBRL = valorEmBTC * cotacaoFormatado;
+
         setBrl1((valorEmBRL * 1000).toFixed(2));
 
-        const btcConvert1 = parseInt(brl1) / parseFloat(data.price)
+        const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
         setBtc1(btcConvert1.toFixed(8))
       })
 
@@ -61,10 +63,9 @@ function App() {
     const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
     setTime(timer)
 
-  }, [cotacaoFormatado, cotacao,
-    btc, sats, brl,
-    btc1, sats1, brl1,
-
+  }, [
+    cotacaoFormatado, 
+    brl, sats1
   ]);
 
   function maskNumber(num: number | string, separator: string = '.'): string {
@@ -73,6 +74,11 @@ function App() {
     let maskedReversedStr = reversedStr.replace(/(\d{3}(?!$))/g, `$1${separator}`);
     let maskedStr = maskedReversedStr.split('').reverse().join('');
     return maskedStr;
+  }
+
+  const handleUnDot = (e: any) => {
+    if (e)
+      return e.replace(/\D/g, '').replace('.', '').replace(',', '');
   }
 
   return (
@@ -99,20 +105,19 @@ function App() {
 
       </div>
       <div className={styles.section}>
-      <Tooltip title="Atualizar Cotação" placement="left">
-        <Button variant="contained" onClick={() => window.location.reload()}>
-          <LoopIcon />
-        </Button>
-      </Tooltip>
+        <Tooltip title="Atualizar Cotação" placement="left">
+          <Button variant="contained" onClick={() => window.location.reload()}>
+            <LoopIcon />
+          </Button>
+        </Tooltip>
       </div>
       <div className={styles.section}>
         <TextField
           className={styles.color}
           label="BRL"
           variant="filled"
-          // type='search'
-          type='number'
-          onChange={(e) => setBrl(e.target.value)}
+          type='search'
+          onChange={(e) => setBrl(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
           title='Quantidade em Reais'
         />
@@ -121,9 +126,8 @@ function App() {
           className={styles.color}
           label="Sats"
           variant="filled"
-          // type='search'
-          type='number'
-          onChange={(e) => setSats1(e.target.value)}
+          type='search'
+          onChange={(e) => setSats1(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
           title='Quantidade em Satoshis'
         />
