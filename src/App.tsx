@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
+import LoopIcon from '@mui/icons-material/Loop';
 
 function App() {
 
@@ -95,6 +96,11 @@ function App() {
           InputLabelProps={{ shrink: true }}
         />
 
+      </div>
+      <div className={styles.section}>
+        <Button variant="contained" onClick={() => window.location.reload()}>
+          <LoopIcon />
+        </Button>
       </div>
       <div className={styles.section}>
         <TextField
