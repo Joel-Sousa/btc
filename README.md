@@ -1,2 +1,3 @@
-### See the application at: https://btc-brl-sats.netlify.app/
+### Simples calculadora de bitcoin BTC-BRL
+### See the application at: https://vlrbs.netlify.app/
 
