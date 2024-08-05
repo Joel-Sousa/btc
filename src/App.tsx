@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
 import { Button, TextField, Tooltip } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
-import {currencyBrlMask} from 'util-mask';
+import { currencyBrlMask } from 'util-mask';
 
 function App() {
 
   const [cotacaoFormatado, setCotacaoFormatado] = useState('' as any);
 
   const [cotacao, setCotacao] = useState('' as any);
-
   const [time, setTime] = useState('' as any);
 
   const [btc, setBtc] = useState('' as any);
@@ -29,7 +28,7 @@ function App() {
     if (!valorBrlSats) setValorBrlSats(0);
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
-    // fetch('')
+      // fetch('')
       .then((response) => response.json())
       .then((data) => {
 
@@ -41,7 +40,7 @@ function App() {
 
         const satsConvert = (valorBrlSats / parseFloat(data.price)) * Math.pow(10, 8);
         const btcConvert = parseInt(valorBrlSats) / parseFloat(data.price);
-        
+
         setSats(maskNumber(satsConvert.toFixed(0)));
         setBtc(btcConvert.toFixed(8));
 
@@ -50,7 +49,7 @@ function App() {
         const valorEmBRL = valorEmBTC * cotacaoFormatado;
 
         setBrl1(currencyBrlMask((valorEmBRL * 1000)));
-        
+
         const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
         setBtc1(btcConvert1.toFixed(8))
       })
@@ -71,12 +70,14 @@ function App() {
   ]);
 
   useEffect(() => {
-    const vlrBtc = (btcCustom / Math.pow(10, 0)).toFixed(3);
+    const newBtc = btcCustom < 999 ? btcCustom + '000' : btcCustom
+    const vlrBtc = (newBtc / Math.pow(10, 0)).toFixed(3);
+    const vlrSats = ((brlCustom / parseFloat(vlrBtc)) * Math.pow(10, 5)).toFixed(3)
 
-    const vlrSats = ((brlCustom / parseFloat(vlrBtc)) * Math.pow(10, 2)).toFixed(3)
+    if (parseFloat(vlrBtc) < 999 || parseFloat(vlrBtc) > 100000)
+      setQtdCustom(maskNumber(handleUnDot(vlrSats)));
 
-    setQtdCustom(maskNumber(handleUnDot(vlrSats)))
-  },[
+  }, [
     btcCustom, brlCustom, qtdCustom
   ]);
 
@@ -94,7 +95,12 @@ function App() {
   }
 
   return (
-    <div >
+    <div>
+      <div className={styles.header}>
+        <h3>
+          Calculadora de Bitcoin e BRL
+        </h3>
+      </div>
       <div className={styles.section}>
         <TextField
           className={styles.color}
@@ -104,7 +110,6 @@ function App() {
           value={cotacaoFormatado}
           InputLabelProps={{ shrink: true }}
           title='Cotação atual do Bitcoin'
-          disabled
         />
         &nbsp;
         <TextField
@@ -113,26 +118,24 @@ function App() {
           variant="filled"
           type='text'
           value={time}
-          disabled
           InputLabelProps={{ shrink: true }}
-          />
+        />
       </div>
-
       <div className={styles.section}>
         <TextField
           className={styles.color}
-          style={{ width: '120px' }}
+          style={{ width: '145px', background: '#00ff9d' }}
           label="Valor do BTC"
           variant="filled"
           type='number'
           onChange={(e) => setBtcCustom(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
           title='Cotação do BTC'
-          />
+        />
         &nbsp;
         <TextField
           className={styles.color}
-          style={{ width: '120px' }}
+          style={{ width: '145px', background: '#00ff9d' }}
           label="Valor em BRL"
           variant="filled"
           type='number'
@@ -143,7 +146,7 @@ function App() {
         &nbsp;
         <TextField
           className={styles.color}
-          style={{ width: '120px' }}
+          style={{ width: '170px' }}
           label="Qtd em Sats"
           variant="filled"
           type='text'
@@ -155,6 +158,7 @@ function App() {
       <div className={styles.section}>
         <TextField
           className={styles.color}
+          style={{ width: '400px', background: '#00ff9d' }}
           autoFocus
           label="Valor"
           variant="filled"

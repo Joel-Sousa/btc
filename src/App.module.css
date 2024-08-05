@@ -1,12 +1,15 @@
 .section{
-  margin-top: 3vh;
-  /* margin-left: 1vh; */
-  /* margin-bottom: 1vh; */
+  margin-top: 2vh;
   display: flex;
   justify-content: center;
   color: white;
 }
 
+.header{
+  display: flex;
+  justify-content: center;
+  color: white;
+}
 .color{
   background-color: white;
   color: white;
