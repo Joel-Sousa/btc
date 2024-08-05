@@ -2,26 +2,31 @@ import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
 import { Button, TextField, Tooltip } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
+import {currencyBrlMask} from 'util-mask';
 
 function App() {
 
   const [cotacaoFormatado, setCotacaoFormatado] = useState('' as any);
+
   const [cotacao, setCotacao] = useState('' as any);
 
   const [time, setTime] = useState('' as any);
 
   const [btc, setBtc] = useState('' as any);
   const [sats, setSats] = useState('' as any);
-  const [brl, setBrl] = useState('' as any);
 
   const [btc1, setBtc1] = useState('' as any);
-  const [sats1, setSats1] = useState('' as any);
   const [brl1, setBrl1] = useState('' as any);
+
+  const [valorBrlSats, setValorBrlSats] = useState('' as any);
+
+  const [btcCustom, setBtcCustom] = useState('' as any);
+  const [brlCustom, setBrlCustom] = useState('' as any);
+  const [qtdCustom, setQtdCustom] = useState('' as any);
 
   useEffect(() => {
 
-    if (!brl) setBrl(0);
-    if (!sats1) setSats1(0);
+    if (!valorBrlSats) setValorBrlSats(0);
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
     // fetch('')
@@ -31,23 +36,21 @@ function App() {
         // sats
         const price = data.price / Math.pow(10, 3);
 
-        setCotacaoFormatado(price.toFixed(3))
-        setCotacao(price.toFixed(8))
+        setCotacaoFormatado(price.toFixed(3));
+        setCotacao(price.toFixed(8));
 
-        const btcConvert = parseInt(brl) / parseFloat(data.price)
-
-        setBtc(btcConvert.toFixed(8))
-
-        const satsConvert = (brl / parseFloat(data.price)) * Math.pow(10, 8)
-
-        setSats(maskNumber(satsConvert.toFixed(0)))
+        const satsConvert = (valorBrlSats / parseFloat(data.price)) * Math.pow(10, 8);
+        const btcConvert = parseInt(valorBrlSats) / parseFloat(data.price);
+        
+        setSats(maskNumber(satsConvert.toFixed(0)));
+        setBtc(btcConvert.toFixed(8));
 
         // brl
-        const valorEmBTC = sats1 / 100000000;
+        const valorEmBTC = valorBrlSats / 100000000;
         const valorEmBRL = valorEmBTC * cotacaoFormatado;
 
-        setBrl1((valorEmBRL * 1000).toFixed(2));
-
+        setBrl1(currencyBrlMask((valorEmBRL * 1000)));
+        
         const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
         setBtc1(btcConvert1.toFixed(8))
       })
@@ -58,14 +61,22 @@ function App() {
     const day = now.getDate();
     const hours = now.getHours();
     const minutes = now.getMinutes();
-    // const seconds = now.getSeconds();
 
     const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
     setTime(timer)
 
   }, [
     cotacaoFormatado, cotacao,
-    brl, sats1
+    valorBrlSats
+  ]);
+
+  useEffect(() => {
+    const vlrBtc = (btcCustom / Math.pow(10, 0)).toFixed(3);
+    const vlrSats = ((brlCustom / parseFloat(vlrBtc)) * Math.pow(10, 2)).toFixed(3)
+
+    setQtdCustom(maskNumber(handleUnDot(vlrSats)))
+  },[
+    btcCustom, brlCustom, qtdCustom
   ]);
 
   function maskNumber(num: number | string, separator: string = '.'): string {
@@ -92,6 +103,7 @@ function App() {
           value={cotacaoFormatado}
           InputLabelProps={{ shrink: true }}
           title='Cotação atual do Bitcoin'
+          disabled
         />
         &nbsp;
         <TextField
@@ -100,41 +112,69 @@ function App() {
           variant="filled"
           type='text'
           value={time}
+          disabled
           InputLabelProps={{ shrink: true }}
           />
       </div>
-      <div className={styles.section}>
-        <Tooltip title="Atualizar Cotação" placement="left">
-          <Button variant="contained" onClick={() => window.location.reload()}>
-            <LoopIcon />
-          </Button>
-        </Tooltip>
-      </div>
+
       <div className={styles.section}>
         <TextField
           className={styles.color}
-          label="BRL"
+          style={{ width: '120px' }}
+          label="Valor do BTC"
           variant="filled"
           type='number'
-          onChange={(e) => setBrl(handleUnDot(e.target.value))}
+          onChange={(e) => setBtcCustom(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
-          title='Quantidade em Reais'
+          title='Cotação do BTC'
+          />
+        &nbsp;
+        <TextField
+          className={styles.color}
+          style={{ width: '120px' }}
+          label="Valor em BRL"
+          variant="filled"
+          type='number'
+          onChange={(e) => setBrlCustom(handleUnDot(e.target.value))}
+          InputLabelProps={{ shrink: true }}
+          title='Quantidade em BRL'
         />
         &nbsp;
         <TextField
           className={styles.color}
-          label="Sats"
+          style={{ width: '120px' }}
+          label="Qtd em Sats"
           variant="filled"
-          type='number'
-          onChange={(e) => setSats1(handleUnDot(e.target.value))}
+          type='text'
+          value={qtdCustom}
           InputLabelProps={{ shrink: true }}
-          title='Quantidade em Satoshis'
+          title='Quantidade de Sats'
         />
       </div>
       <div className={styles.section}>
         <TextField
           className={styles.color}
-          label="BRL->Sats"
+          autoFocus
+          label="Valor"
+          variant="filled"
+          type='number'
+          onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
+          InputLabelProps={{ shrink: true }}
+          title='Valor em BRL ou Sats'
+        />
+        &nbsp;
+
+        <Tooltip title="Atualizar Cotação" placement="left">
+          <Button variant="contained" onClick={() => window.location.reload()}/*  style={{ height: '40px' }} */>
+            <LoopIcon />
+          </Button>
+        </Tooltip>
+        &nbsp;
+      </div>
+      <div className={styles.section}>
+        <TextField
+          className={styles.color}
+          label="Valor em Sats"
           variant="filled"
           type='text'
           value={sats}
@@ -144,7 +184,7 @@ function App() {
         &nbsp;
         <TextField
           className={styles.color}
-          label="Sats->BRL"
+          label="Valor em BRL"
           variant="filled"
           type='text'
           InputLabelProps={{ shrink: true }}
@@ -155,7 +195,7 @@ function App() {
       <div className={styles.section}>
         <TextField
           className={styles.color}
-          label="Sats->BTC"
+          label="Sats em BTC"
           variant="filled"
           type='text'
           value={btc}
@@ -165,7 +205,7 @@ function App() {
         &nbsp;
         <TextField
           className={styles.color}
-          label="BRL->BTC"
+          label="BRL em BTC"
           variant="filled"
           type='text'
           value={btc1}
