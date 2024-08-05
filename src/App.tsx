@@ -174,6 +174,7 @@ function App() {
       <div className={styles.section}>
         <TextField
           className={styles.color}
+          style={{width: '120px', background: '#44d6ff'}}
           label="Valor em Sats"
           variant="filled"
           type='text'
@@ -184,6 +185,19 @@ function App() {
         &nbsp;
         <TextField
           className={styles.color}
+          style={{width: '120px', background: '#44d6ff'}}
+          label="Sats em BTC"
+          variant="filled"
+          type='text'
+          value={btc}
+          InputLabelProps={{ shrink: true }}
+          title='Conversão de Satoshis para Bitcoin'
+          />
+          &nbsp;
+      <TextField
+          className={styles.color}
+          style={{width: '120px', background: '#4fff75'}}
+
           label="Valor em BRL"
           variant="filled"
           type='text'
@@ -191,20 +205,10 @@ function App() {
           value={brl1}
           title='Conversão de Satoshis para Reais'
         />
-      </div>
-      <div className={styles.section}>
-        <TextField
-          className={styles.color}
-          label="Sats em BTC"
-          variant="filled"
-          type='text'
-          value={btc}
-          InputLabelProps={{ shrink: true }}
-          title='Conversão de Satoshis para Bitcoin'
-        />
         &nbsp;
         <TextField
-          className={styles.color}
+          // className={styles.color}
+          style={{width: '120px', background: '#4fff75'}}
           label="BRL em BTC"
           variant="filled"
           type='text'
