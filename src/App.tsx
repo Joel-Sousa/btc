@@ -72,6 +72,7 @@ function App() {
 
   useEffect(() => {
     const vlrBtc = (btcCustom / Math.pow(10, 0)).toFixed(3);
+
     const vlrSats = ((brlCustom / parseFloat(vlrBtc)) * Math.pow(10, 2)).toFixed(3)
 
     setQtdCustom(maskNumber(handleUnDot(vlrSats)))
@@ -174,7 +175,6 @@ function App() {
       <div className={styles.section}>
         <TextField
           className={styles.color}
-          style={{width: '120px', background: '#44d6ff'}}
           label="Valor em Sats"
           variant="filled"
           type='text'
@@ -185,19 +185,6 @@ function App() {
         &nbsp;
         <TextField
           className={styles.color}
-          style={{width: '120px', background: '#44d6ff'}}
-          label="Sats em BTC"
-          variant="filled"
-          type='text'
-          value={btc}
-          InputLabelProps={{ shrink: true }}
-          title='Conversão de Satoshis para Bitcoin'
-          />
-          &nbsp;
-      <TextField
-          className={styles.color}
-          style={{width: '120px', background: '#4fff75'}}
-
           label="Valor em BRL"
           variant="filled"
           type='text'
@@ -205,10 +192,20 @@ function App() {
           value={brl1}
           title='Conversão de Satoshis para Reais'
         />
+      </div>
+      <div className={styles.section}>
+        <TextField
+          className={styles.color}
+          label="Sats em BTC"
+          variant="filled"
+          type='text'
+          value={btc}
+          InputLabelProps={{ shrink: true }}
+          title='Conversão de Satoshis para Bitcoin'
+        />
         &nbsp;
         <TextField
-          // className={styles.color}
-          style={{width: '120px', background: '#4fff75'}}
+          className={styles.color}
           label="BRL em BTC"
           variant="filled"
           type='text'
