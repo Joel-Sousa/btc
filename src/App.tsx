@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
 
     if (!valorBrlSats) setValorBrlSats(0);
-    if (!brl1) setBrl1(0);
+    // if (!brl1) setBrl1(0);
 
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
