@@ -109,13 +109,15 @@ function App() {
       return e.replace(/\D/g, '').replace('.', '').replace(',', '');
   }
 
+  const text = `Todos os campos de verde são <br> para inserção de valores`;
+
   return (
     <div>
       <div className={styles.header}>
         <h3>
           Calculadora de Bitcoin e BRL
         &nbsp;
-          <Tooltip title="Todos os campos de verde são para inserção de valores" placement="left">
+          <Tooltip title={<> <span dangerouslySetInnerHTML={{ __html: text }}></span> </>} placement="left">
             <HelpOutlineIcon />
           </Tooltip>
         </h3>
