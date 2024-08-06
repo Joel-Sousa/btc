@@ -91,7 +91,6 @@ function App() {
     const vlr = (((btcNew * cotacaoFormatado) * Math.pow(10, 5)).toFixed(0))
     setBrlNew(vlr.slice(0, -2) + ',' + vlr.slice(-2));
 
-    console.log("btcNew:", btcNew);
     if (btcNew == '0.' || btcNew == '')
       setBrlNew(0)
   },
