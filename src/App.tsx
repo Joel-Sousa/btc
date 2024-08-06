@@ -3,6 +3,7 @@ import styles from './App.module.css'
 import { Button, TextField, Tooltip } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
 import { currencyBrlMask } from 'util-mask';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 function App() {
 
@@ -23,9 +24,14 @@ function App() {
   const [brlCustom, setBrlCustom] = useState('' as any);
   const [qtdCustom, setQtdCustom] = useState('' as any);
 
+  const [btcNew, setBtcNew] = useState('' as any);
+  const [brlNew, setBrlNew] = useState('' as any);
+
   useEffect(() => {
 
     if (!valorBrlSats) setValorBrlSats(0);
+    if (!brl1) setBrl1(0);
+
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
       // fetch('')
@@ -81,6 +87,16 @@ function App() {
     btcCustom, brlCustom, qtdCustom
   ]);
 
+  useEffect(() => {
+    const vlr = (((btcNew * cotacaoFormatado) * Math.pow(10, 5)).toFixed(0))
+    setBrlNew(vlr.slice(0, -2) + ',' + vlr.slice(-2));
+
+    console.log("btcNew:", btcNew);
+    if (btcNew == '0.' || btcNew == '')
+      setBrlNew(0)
+  },
+    [btcNew, brlNew, cotacaoFormatado]);
+
   function maskNumber(num: number | string, separator: string = '.'): string {
     let numStr = num.toString();
     let reversedStr = numStr.split('').reverse().join('');
@@ -99,6 +115,10 @@ function App() {
       <div className={styles.header}>
         <h3>
           Calculadora de Bitcoin e BRL
+        &nbsp;
+          <Tooltip title="Todos os campos de verde são para inserção de valores" placement="right">
+            <HelpOutlineIcon />
+          </Tooltip>
         </h3>
       </div>
       <div className={styles.section}>
@@ -130,7 +150,7 @@ function App() {
           type='number'
           onChange={(e) => setBtcCustom(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
-          title='Cotação do BTC'
+          title='Insira uma Cotação do BTC qualquer'
         />
         &nbsp;
         <TextField
@@ -158,14 +178,39 @@ function App() {
       <div className={styles.section}>
         <TextField
           className={styles.color}
-          style={{ width: '400px', background: '#00ff9d' }}
+          style={{ width: '130px', background: '#00ff9d' }}
           autoFocus
-          label="Valor"
+          label="Valor BTC | Sats"
           variant="filled"
           type='number'
           onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
           InputLabelProps={{ shrink: true }}
           title='Valor em BRL ou Sats'
+        />
+        &nbsp;
+        <TextField
+          className={styles.color}
+          style={{ width: '130px', background: '#00ff9d' }}
+          autoFocus
+          label="Valor em BTC"
+          variant="filled"
+          type='number'
+          onChange={(e) => setBtcNew(0 + '.' + e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          title='Valor em BTC sem a casa decimal ex: 0025'
+        />
+        &nbsp;
+        <TextField
+          className={styles.color}
+          style={{ width: '130px' }}
+          autoFocus
+          label="Valor em BRL"
+          variant="filled"
+          type='text'
+          value={brlNew}
+          // onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
+          InputLabelProps={{ shrink: true }}
+          title='Valor em BRL'
         />
         &nbsp;
 
@@ -184,7 +229,7 @@ function App() {
           type='text'
           value={sats}
           InputLabelProps={{ shrink: true }}
-          title='Conversão de Reais para Satoshis'
+          title='Conversão de BRL para Sats'
         />
         &nbsp;
         <TextField
@@ -194,7 +239,7 @@ function App() {
           type='text'
           InputLabelProps={{ shrink: true }}
           value={brl1}
-          title='Conversão de Satoshis para Reais'
+          title='Conversão de Satoshis para BRL'
         />
       </div>
       <div className={styles.section}>
@@ -205,7 +250,7 @@ function App() {
           type='text'
           value={btc}
           InputLabelProps={{ shrink: true }}
-          title='Conversão de Satoshis para Bitcoin'
+          title='Conversão de Sats para BTC'
         />
         &nbsp;
         <TextField
@@ -215,7 +260,7 @@ function App() {
           type='text'
           value={btc1}
           InputLabelProps={{ shrink: true }}
-          title='Conversão de Reais para Bitcoin'
+          title='Conversão de BRL para BTC'
         />
       </div>
     </div>
