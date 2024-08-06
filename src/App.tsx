@@ -175,7 +175,7 @@ function App() {
       <div className={styles.section}>
       <TextField
           className={styles.color}
-          style={{ width: '16vw', background: '#00ff9d' }}
+          style={{ width: '230px', background: '#00ff9d' }}
           autoFocus
           label="Insira o Valor em BTC"
           variant="filled"
@@ -187,7 +187,7 @@ function App() {
         &nbsp;
         <TextField
           className={styles.color}
-          style={{ width: '16vw' }}
+          style={{ width: '230px' }}
           autoFocus
           label="Valor em BRL"
           variant="filled"
@@ -199,7 +199,7 @@ function App() {
       <div className={styles.section}>
         <TextField
           className={styles.color}
-          style={{ width: '27vw', background: '#00ff9d' }}
+          style={{ width: '400px', background: '#00ff9d' }}
           autoFocus
           label="Insira o Valor em BRL ou Sats"
           variant="filled"
