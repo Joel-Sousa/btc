@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
 
     if (!valorBrlSats) setValorBrlSats(0);
-    if (!brl1) setBrl1(0);
+    // if (!brl1) setBrl1(0);
 
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
@@ -84,7 +84,7 @@ function App() {
       setQtdCustom(maskNumber(handleUnDot(vlrSats)));
 
   }, [
-    btcCustom, brlCustom, qtdCustom
+    btcCustom, brlCustom
   ]);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ function App() {
     if (btcNew === '0.' || btcNew === '')
       setBrlNew(0)
   },
-    [btcNew, brlNew, cotacaoFormatado]);
+    [btcNew, cotacaoFormatado]);
 
   function maskNumber(num: number | string, separator: string = '.'): string {
     let numStr = num.toString();
