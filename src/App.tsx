@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
 
     if (!valorBrlSats) setValorBrlSats(0);
-    // if (!brl1) setBrl1(0);
+    if (!brl1) setBrl1(0);
 
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
@@ -91,7 +91,7 @@ function App() {
     const vlr = (((btcNew * cotacaoFormatado) * Math.pow(10, 5)).toFixed(0))
     setBrlNew(vlr.slice(0, -2) + ',' + vlr.slice(-2));
 
-    if (btcNew == '0.' || btcNew == '')
+    if (btcNew === '0.' || btcNew === '')
       setBrlNew(0)
   },
     [btcNew, brlNew, cotacaoFormatado]);
