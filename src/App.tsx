@@ -115,7 +115,7 @@ function App() {
         <h3>
           Calculadora de Bitcoin e BRL
         &nbsp;
-          <Tooltip title="Todos os campos de verde são para inserção de valores" placement="right">
+          <Tooltip title="Todos os campos de verde são para inserção de valores" placement="left">
             <HelpOutlineIcon />
           </Tooltip>
         </h3>
