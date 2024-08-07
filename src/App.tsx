@@ -123,6 +123,12 @@ function App() {
               <HelpOutlineIcon />
             </Tooltip>
             &nbsp;
+            <Tooltip title="Atualizar Cotação" placement="left">
+              <Button variant="contained" onClick={() => window.location.reload()}/*  style={{ height: '40px' }} */>
+                <LoopIcon />
+              </Button>
+            </Tooltip>
+            &nbsp;
           </Card>
         </h3>
       </div>
@@ -151,137 +157,134 @@ function App() {
         </Card>
       </div>
       <div className={styles.section}>
-      <Card variant="outlined">
-      <Typography><b>Simulação de compra de BTC</b></Typography>
-        <TextField
-          className={styles.color}
-          size="small"
-          style={{ width: '145px', background: '#00ff9d' }}
-          label="Insira o Valor do BTC"
-          variant="filled"
-          type='number'
-          onChange={(e) => setBtcCustom(handleUnDot(e.target.value))}
-          InputLabelProps={{ shrink: true }}
-          title='Insira uma Cotação do BTC qualquer'
-        />
-        &nbsp;
-        <TextField
-          className={styles.color}
-          size="small"
-          style={{ width: '145px', background: '#00ff9d' }}
-          label="Insira o Valor em BRL"
-          variant="filled"
-          type='number'
-          onChange={(e) => setBrlCustom(handleUnDot(e.target.value))}
-          InputLabelProps={{ shrink: true }}
-          title='Insira a Quantidade em BRL'
-        />
-        &nbsp;
-        <TextField
-          className={styles.color}
-          size="small"
-          style={{ width: '170px' }}
-          label="Quantidade de Sats"
-          variant="filled"
-          type='text'
-          value={qtdCustom}
-          InputLabelProps={{ shrink: true }}
-        />
+        <Card variant="outlined">
+          <Typography><b>Simulação de compra de BTC</b></Typography>
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '145px', background: '#00ff9d' }}
+            label="Insira o Valor do BTC"
+            variant="filled"
+            type='number'
+            onChange={(e) => setBtcCustom(handleUnDot(e.target.value))}
+            InputLabelProps={{ shrink: true }}
+            title='Insira uma Cotação do BTC qualquer'
+          />
+          &nbsp;
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '145px', background: '#00ff9d' }}
+            label="Insira o Valor em BRL"
+            variant="filled"
+            type='number'
+            onChange={(e) => setBrlCustom(handleUnDot(e.target.value))}
+            InputLabelProps={{ shrink: true }}
+            title='Insira a Quantidade em BRL'
+          />
+          &nbsp;
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '170px' }}
+            label="Quantidade de Sats"
+            variant="filled"
+            type='text'
+            value={qtdCustom}
+            InputLabelProps={{ shrink: true }}
+          />
         </Card>
 
       </div>
       <div className={styles.section}>
-      <Card variant="outlined">
-      <Typography><b>Conversão de BTC para BRL</b></Typography>
-        <TextField
-          className={styles.color}
-          size="small"
-          style={{ width: '230px', background: '#00ff9d' }}
-          autoFocus
-          label="Insira o Valor em BTC"
-          variant="filled"
-          type='number'
-          onChange={(e) => setBtcNew(0 + '.' + e.target.value)}
-          InputLabelProps={{ shrink: true }}
-          title='Inserir o valor do BTC somente com as casas fracionarias: 0025'
-        />
-        &nbsp;
-        <TextField
-          className={styles.color}
-          size="small"
-          style={{ width: '230px' }}
-          autoFocus
-          label="Valor em BRL"
-          variant="filled"
-          type='text'
-          value={brlNew}
-          InputLabelProps={{ shrink: true }}
-        />
+        <Card variant="outlined">
+          <Typography><b>Conversão de BTC para BRL</b></Typography>
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '230px', background: '#00ff9d' }}
+            autoFocus
+            label="Insira o Valor em BTC"
+            variant="filled"
+            type='number'
+            onChange={(e) => setBtcNew(0 + '.' + e.target.value)}
+            InputLabelProps={{ shrink: true }}
+            title='Inserir o valor do BTC somente com as casas fracionarias: 0025'
+          />
+          &nbsp;
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '230px' }}
+            autoFocus
+            label="Valor em BRL"
+            variant="filled"
+            type='text'
+            value={brlNew}
+            InputLabelProps={{ shrink: true }}
+          />
         </Card>
       </div>
       <div className={styles.section}>
-      <Card variant="outlined">
-      <Typography><b>Conversão de BRL ou Sats </b></Typography>
-        <TextField
-          className={styles.color}
-          size="small"
-          style={{ width: '395px', background: '#00ff9d' }}
-          autoFocus
-          label="Insira o Valor em BRL ou Sats"
-          variant="filled"
-          type='number'
-          onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
-          InputLabelProps={{ shrink: true }}
-        />
-        &nbsp;
-        <Tooltip title="Atualizar Cotação" placement="right">
-          <Button variant="contained" onClick={() => window.location.reload()}/*  style={{ height: '40px' }} */>
-            <LoopIcon />
-          </Button>
-        </Tooltip>
-        &nbsp;
-        <div className={styles.section}>
-        <TextField
-          className={styles.color}
-          size="small"
-          label="Valor de BRL para Sats"
-          variant="filled"
-          type='text'
-          value={sats}
-          InputLabelProps={{ shrink: true }}
-        />
-        &nbsp;
-        <TextField
-          className={styles.color}
-          size="small"
-          label="Valor de Sats para BRL"
-          variant="filled"
-          type='text'
-          InputLabelProps={{ shrink: true }}
-          value={brl1}
-        />
-      </div>
-      <div className={styles.section}>
-        <TextField
-          className={styles.color}
-          size="small"
-          label="Valor de Sats para BTC"
-          variant="filled"
-          type='text'
-          value={btc}
-          InputLabelProps={{ shrink: true }}
-        />
-        &nbsp;
-        <TextField
-          className={styles.color}
-          size="small"
-          label="Valor de BRL para BTC"
-          variant="filled"
-          type='text'
-          value={btc1}
-          InputLabelProps={{ shrink: true }}
-        />
-      </div>
+        <Card variant="outlined">
+          <Typography><b>Conversão de BRL ou Sats </b></Typography>
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ background: '#00ff9d' }}
+            autoFocus
+            fullWidth
+            label="Insira o Valor em BRL ou Sats"
+            variant="filled"
+            type='number'
+            onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
+            InputLabelProps={{ shrink: true }}
+          />
+          {/* &nbsp; */}
+
+          {/* &nbsp; */}
+          <div className={styles.section}>
+            <TextField
+              className={styles.color}
+              size="small"
+              label="Valor de BRL para Sats"
+              variant="filled"
+              type='text'
+              value={sats}
+              InputLabelProps={{ shrink: true }}
+            />
+            &nbsp;
+            <TextField
+              className={styles.color}
+              size="small"
+              label="Valor de Sats para BRL"
+              variant="filled"
+              type='text'
+              InputLabelProps={{ shrink: true }}
+              value={brl1}
+            />
+          </div>
+          <div className={styles.section}>
+            <TextField
+              className={styles.color}
+              size="small"
+              label="Valor de Sats para BTC"
+              variant="filled"
+              type='text'
+              value={btc}
+              InputLabelProps={{ shrink: true }}
+            />
+            &nbsp;
+            <TextField
+              className={styles.color}
+              size="small"
+              label="Valor de BRL para BTC"
+              variant="filled"
+              type='text'
+              value={btc1}
+              InputLabelProps={{ shrink: true }}
+            />
+          </div>
         </Card>
       </div>
     </div>
