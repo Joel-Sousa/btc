@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
-import { AppBar, Button, Card, TextField, Toolbar, Tooltip, Typography } from '@mui/material';
+import {Button, Card, TextField, Tooltip, Typography } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
 import { currencyBrlMask } from 'util-mask';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -114,10 +114,11 @@ function App() {
   return (
     <div>
       <div className={styles.header}>
-        <h3>
           <Card variant="outlined">
             &nbsp;
+            <b>
             Calculadora de Bitcoin e BRL
+            </b>
             &nbsp;
             <Tooltip title={<> <span dangerouslySetInnerHTML={{ __html: text }}></span> </>} placement="left">
               <HelpOutlineIcon />
@@ -128,9 +129,8 @@ function App() {
                 <LoopIcon />
               </Button>
             </Tooltip>
-            &nbsp;
+            
           </Card>
-        </h3>
       </div>
       <div className={styles.section}>
         <Card variant="outlined">
