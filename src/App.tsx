@@ -233,7 +233,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{width:'410px', background: '#00ff9d' }}
+            style={{width:'360px', background: '#00ff9d' }}
             autoFocus
             fullWidth
             label="Valor em BRL ou Sats"
@@ -245,7 +245,7 @@ function App() {
           <div className={styles.section}>
             <TextField
               className={styles.color}
-              style={{ width: '200px' }}
+              style={{ width: '180px' }}
               size="small"
               label="Valor de BRL para Sats"
               variant="filled"
@@ -256,7 +256,7 @@ function App() {
             &nbsp;
             <TextField
               className={styles.color}
-              style={{ width: '200px' }}
+              style={{ width: '180px' }}
               size="small"
               label="Valor de Sats para BRL"
               variant="filled"
@@ -268,7 +268,7 @@ function App() {
           <div className={styles.section}>
             <TextField
               className={styles.color}
-              style={{ width: '200px' }}
+              style={{ width: '180px' }}
               size="small"
               label="Valor de Sats para BTC"
               variant="filled"
@@ -279,7 +279,7 @@ function App() {
             &nbsp;
             <TextField
               className={styles.color}
-              style={{ width: '200px' }}
+              style={{ width: '180px' }}
               size="small"
               label="Valor de BRL para BTC"
               variant="filled"
