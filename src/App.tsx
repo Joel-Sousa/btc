@@ -137,6 +137,7 @@ function App() {
           <Typography><b>Cotação e data e hora</b></Typography>
           <TextField
             className={styles.color}
+            style={{ width: '200px'}}
             size="small"
             label="Cotação Atual do BTC"
             variant="filled"
@@ -147,6 +148,7 @@ function App() {
           &nbsp;
           <TextField
             className={styles.color}
+            style={{ width: '200px'}}
             size="small"
             label="Data/Hora"
             variant="filled"
@@ -162,7 +164,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '145px', background: '#00ff9d' }}
+            style={{ width: '120px', background: '#00ff9d' }}
             label="Insira o Valor do BTC"
             variant="filled"
             type='number'
@@ -174,7 +176,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '145px', background: '#00ff9d' }}
+            style={{ width: '120px', background: '#00ff9d' }}
             label="Insira o Valor em BRL"
             variant="filled"
             type='number'
@@ -186,7 +188,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '170px' }}
+            style={{ width: '155px' }}
             label="Quantidade de Sats"
             variant="filled"
             type='text'
@@ -202,7 +204,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '230px', background: '#00ff9d' }}
+            style={{ width: '200px', background: '#00ff9d' }}
             autoFocus
             label="Insira o Valor em BTC"
             variant="filled"
@@ -215,7 +217,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '230px' }}
+            style={{ width: '200px' }}
             autoFocus
             label="Valor em BRL"
             variant="filled"
@@ -231,7 +233,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ background: '#00ff9d' }}
+            style={{width:'400px', background: '#00ff9d' }}
             autoFocus
             fullWidth
             label="Insira o Valor em BRL ou Sats"
@@ -240,12 +242,10 @@ function App() {
             onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
             InputLabelProps={{ shrink: true }}
           />
-          {/* &nbsp; */}
-
-          {/* &nbsp; */}
           <div className={styles.section}>
             <TextField
               className={styles.color}
+              style={{ width: '200px' }}
               size="small"
               label="Valor de BRL para Sats"
               variant="filled"
@@ -256,6 +256,7 @@ function App() {
             &nbsp;
             <TextField
               className={styles.color}
+              style={{ width: '200px' }}
               size="small"
               label="Valor de Sats para BRL"
               variant="filled"
@@ -267,6 +268,7 @@ function App() {
           <div className={styles.section}>
             <TextField
               className={styles.color}
+              style={{ width: '200px' }}
               size="small"
               label="Valor de Sats para BTC"
               variant="filled"
@@ -277,6 +279,7 @@ function App() {
             &nbsp;
             <TextField
               className={styles.color}
+              style={{ width: '200px' }}
               size="small"
               label="Valor de BRL para BTC"
               variant="filled"
