@@ -137,7 +137,7 @@ function App() {
             <Typography><b>&nbsp;Cotação e data e hora</b></Typography>
           <TextField
             className={styles.color}
-            style={{ width: '200px'}}
+            style={{ width: '180px'}}
             size="small"
             label="Cotação Atual do BTC"
             variant="filled"
@@ -148,7 +148,7 @@ function App() {
           &nbsp;
           <TextField
             className={styles.color}
-            style={{ width: '200px'}}
+            style={{ width: '180px'}}
             size="small"
             label="Data/Hora"
             variant="filled"
@@ -164,7 +164,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '130px', background: '#00ff9d' }}
+            style={{ width: '110px', background: '#00ff9d' }}
             label="Valor do BTC"
             variant="filled"
             type='number'
@@ -176,7 +176,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '130px', background: '#00ff9d' }}
+            style={{ width: '115px', background: '#00ff9d' }}
             label="Valor em BRL"
             variant="filled"
             type='number'
@@ -188,7 +188,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '135px' }}
+            style={{ width: '130px' }}
             label="Quantidade de Sats"
             variant="filled"
             type='text'
@@ -204,7 +204,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '200px', background: '#00ff9d' }}
+            style={{ width: '180px', background: '#00ff9d' }}
             autoFocus
             label="Valor em BTC"
             variant="filled"
@@ -217,7 +217,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '200px' }}
+            style={{ width: '180px' }}
             autoFocus
             label="Valor em BRL"
             variant="filled"
