@@ -29,9 +29,15 @@ function App() {
 
   useEffect(() => {
 
-    if (!valorBrlSats) setValorBrlSats(0);
     // if (!brl1) setBrl1(0);
 
+    setInterval(() => {
+      // console.log('1');
+      updateBtc();
+    }, 60000);
+
+    function updateBtc(){
+      if (!valorBrlSats) setValorBrlSats(0);
 
     fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
       // fetch('')
@@ -70,6 +76,9 @@ function App() {
     const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
     setTime(timer)
 
+  }
+
+  updateBtc();
   }, [
     cotacaoFormatado, cotacao,
     valorBrlSats
