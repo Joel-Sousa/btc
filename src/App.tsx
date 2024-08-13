@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './App.module.css'
-import {Button, Card, TextField, Tooltip, Typography } from '@mui/material';
+import { Button, Card, TextField, Tooltip, Typography } from '@mui/material';
 import LoopIcon from '@mui/icons-material/Loop';
 import { currencyBrlMask } from 'util-mask';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -36,64 +36,74 @@ function App() {
       updateBtc();
     }, 60000);
 
-    function updateBtc(){
+    function updateBtc() {
       if (!valorBrlSats) setValorBrlSats(0);
 
-    fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
-      // fetch('')
-      .then((response) => response.json())
-      .then((data) => {
+      fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
+        // fetch('')
+        .then((response) => response.json())
+        .then((data) => {
 
-        // sats
-        const price = data.price / Math.pow(10, 3);
+          // sats
+          const price = data.price / Math.pow(10, 3);
+          // console.log("data.price:", data.price);
 
-        setCotacaoFormatado(price.toFixed(3));
-        setCotacao(price.toFixed(8));
+          setCotacaoFormatado(price.toFixed(3));
+          setCotacao(price.toFixed(8));
 
-        const satsConvert = (valorBrlSats / parseFloat(data.price)) * Math.pow(10, 8);
-        const btcConvert = parseInt(valorBrlSats) / parseFloat(data.price);
+          const satsConvert = (valorBrlSats / parseFloat(data.price)) * Math.pow(10, 8);
+          const btcConvert = parseInt(valorBrlSats) / parseFloat(data.price);
 
-        setSats(maskNumber(satsConvert.toFixed(0)));
-        setBtc(btcConvert.toFixed(8));
+          setSats(maskNumber(satsConvert.toFixed(0)));
+          setBtc(btcConvert.toFixed(8));
 
-        // brl
-        const valorEmBTC = valorBrlSats / 100000000;
-        const valorEmBRL = valorEmBTC * cotacaoFormatado;
+          // brl
+          const valorEmBTC = valorBrlSats / 100000000;
+          const valorEmBRL = valorEmBTC * cotacaoFormatado;
 
-        setBrl1(currencyBrlMask((valorEmBRL * 1000)));
+          setBrl1(currencyBrlMask((valorEmBRL * 1000)));
 
-        const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
-        setBtc1(btcConvert1.toFixed(8))
-      })
+          const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
+          setBtc1(btcConvert1.toFixed(8))
+        })
 
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1; // Os meses começam em 0
-    const day = now.getDate();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1; // Os meses começam em 0
+      const day = now.getDate();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
 
-    const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
-    setTime(timer)
+      const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
+      setTime(timer)
 
-  }
+    }
 
-  updateBtc();
+    updateBtc();
   }, [
     cotacaoFormatado, cotacao,
     valorBrlSats
   ]);
 
   useEffect(() => {
-    const newBtc = btcCustom < 999 ? btcCustom + '000' : btcCustom
-    const vlrBtc = (newBtc / Math.pow(10, 0)).toFixed(3);
-    const vlrSats = ((brlCustom / parseFloat(vlrBtc)) * Math.pow(10, 5)).toFixed(3)
+    let newBtc = 0.0;
 
-    if (parseFloat(vlrBtc) < 999 || parseFloat(vlrBtc) > 100000)
-      setQtdCustom(maskNumber(handleUnDot(vlrSats)));
+    if (btcCustom < 999)
+      newBtc = parseFloat(btcCustom + '000');
+    else
+      newBtc = btcCustom;
+
+    const vlrSats = (brlCustom / newBtc)
+
+    let newVlrSats = (vlrSats * 100000000).toFixed(0)
+
+    const btcLenght = btcCustom === undefined ? 0 : btcCustom.toString().length;
+
+    if (btcLenght === 2 || btcLenght === 3 || btcLenght === 6)
+      setQtdCustom(maskNumber(handleUnDot(newVlrSats)));
 
   }, [
-    btcCustom, brlCustom
+    btcCustom, brlCustom, qtdCustom
   ]);
 
   useEffect(() => {
@@ -123,47 +133,49 @@ function App() {
   return (
     <div>
       <div className={styles.header}>
-          <Card variant="outlined">
-            &nbsp;
-            <b>
+        <Card variant="outlined">
+          &nbsp;
+          <b>
             Calculadora de Bitcoin e BRL
-            </b>
-            &nbsp;
-            <Tooltip title={<> <span dangerouslySetInnerHTML={{ __html: text }}></span> </>} placement="left">
-              <HelpOutlineIcon />
-            </Tooltip>
-            &nbsp;
-            <Tooltip title="Atualizar Cotação" placement="left">
-              <Button variant="contained" onClick={() => window.location.reload()}/*  style={{ height: '40px' }} */>
-                <LoopIcon />
-              </Button>
-            </Tooltip>
-            
-          </Card>
+          </b>
+          &nbsp;
+          <Tooltip title={<> <span dangerouslySetInnerHTML={{ __html: text }}></span> </>} placement="left">
+            <HelpOutlineIcon />
+          </Tooltip>
+          &nbsp;
+          <Tooltip title="Atualizar Cotação" placement="left">
+            <Button variant="contained" onClick={() => window.location.reload()}/*  style={{ height: '40px' }} */>
+              <LoopIcon />
+            </Button>
+          </Tooltip>
+
+        </Card>
       </div>
       <div className={styles.section}>
         <Card variant="outlined">
-            <Typography><b>&nbsp;Cotação e data e hora</b></Typography>
+          <Typography><b>&nbsp;Cotação e data e hora</b></Typography>
           <TextField
             className={styles.color}
-            style={{ width: '180px'}}
+            style={{ width: '180px' }}
             size="small"
             label="Cotação Atual do BTC"
             variant="filled"
             type='text'
             value={cotacaoFormatado}
             InputLabelProps={{ shrink: true }}
+              InputProps={{readOnly: true,}}
           />
           &nbsp;
           <TextField
             className={styles.color}
-            style={{ width: '180px'}}
+            style={{ width: '180px' }}
             size="small"
             label="Data/Hora"
             variant="filled"
             type='text'
             value={time}
             InputLabelProps={{ shrink: true }}
+              InputProps={{readOnly: true,}}
           />
         </Card>
       </div>
@@ -203,6 +215,7 @@ function App() {
             type='text'
             value={qtdCustom}
             InputLabelProps={{ shrink: true }}
+              InputProps={{readOnly: true,}}
           />
         </Card>
 
@@ -233,6 +246,7 @@ function App() {
             type='text'
             value={brlNew}
             InputLabelProps={{ shrink: true }}
+              InputProps={{readOnly: true,}}
           />
         </Card>
       </div>
@@ -242,7 +256,7 @@ function App() {
           <TextField
             className={styles.color}
             size="small"
-            style={{width:'360px', background: '#00ff9d' }}
+            style={{ width: '360px', background: '#00ff9d' }}
             autoFocus
             fullWidth
             label="Valor em BRL ou Sats"
@@ -261,6 +275,7 @@ function App() {
               type='text'
               value={sats}
               InputLabelProps={{ shrink: true }}
+              
             />
             &nbsp;
             <TextField
@@ -272,6 +287,8 @@ function App() {
               type='text'
               InputLabelProps={{ shrink: true }}
               value={brl1}
+              InputProps={{readOnly: true,}}
+
             />
           </div>
           <div className={styles.section}>
@@ -284,6 +301,8 @@ function App() {
               type='text'
               value={btc}
               InputLabelProps={{ shrink: true }}
+              InputProps={{readOnly: true,}}
+
             />
             &nbsp;
             <TextField
@@ -295,6 +314,7 @@ function App() {
               type='text'
               value={btc1}
               InputLabelProps={{ shrink: true }}
+              InputProps={{readOnly: true,}}
             />
           </div>
         </Card>
