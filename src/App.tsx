@@ -264,6 +264,7 @@ function App() {
             type='number'
             onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
             InputLabelProps={{ shrink: true }}
+            title='Insira o valor em BRL ou em Sats para converter'
           />
           <div className={styles.section}>
             <TextField
