@@ -20,6 +20,9 @@ function App() {
 
   const [valorBrlSats, setValorBrlSats] = useState('' as any);
 
+  const [btcPercentage, setBtcPercentage] = useState('' as any);
+  const [percentage, setPercentage] = useState('' as any);
+
   const [btcCustom, setBtcCustom] = useState('' as any);
   const [brlCustom, setBrlCustom] = useState('' as any);
   const [qtdCustom, setQtdCustom] = useState('' as any);
@@ -82,7 +85,7 @@ function App() {
     updateBtc();
   }, [
     cotacaoFormatado, cotacao,
-    valorBrlSats
+    valorBrlSats,
   ]);
 
   useEffect(() => {
@@ -112,8 +115,19 @@ function App() {
 
     if (btcNew === '0.' || btcNew === '')
       setBrlNew(0)
-  },
-    [btcNew, cotacaoFormatado]);
+  }, [btcNew, cotacaoFormatado]);
+
+  useEffect(() => {
+
+    const toFixedBtc = parseInt(cotacaoFormatado)
+    const percent = ((toFixedBtc - btcPercentage) / toFixedBtc) * 100;
+
+    if (btcPercentage === '' || btcPercentage === 0)
+      setPercentage('');
+    else
+      setPercentage(percent.toFixed(2) + '%');
+
+  }, [cotacaoFormatado, btcPercentage])
 
   function maskNumber(num: number | string, separator: string = '.'): string {
     let numStr = num.toString();
@@ -163,7 +177,7 @@ function App() {
             type='text'
             value={cotacaoFormatado}
             InputLabelProps={{ shrink: true }}
-              InputProps={{readOnly: true,}}
+            InputProps={{ readOnly: true, }}
           />
           &nbsp;
           <TextField
@@ -175,7 +189,67 @@ function App() {
             type='text'
             value={time}
             InputLabelProps={{ shrink: true }}
-              InputProps={{readOnly: true,}}
+            InputProps={{ readOnly: true, }}
+          />
+        </Card>
+      </div>
+      <div className={styles.section}>
+        <Card variant="outlined">
+          <Typography><b>&nbsp;Diferença em porcentagem %</b></Typography>
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '180px', background: '#00ff9d' }}
+            autoFocus
+            label="Valor em BTC"
+            variant="filled"
+            type='number'
+            onChange={(e) => setBtcPercentage(e.target.value)}
+            InputLabelProps={{ shrink: true }}
+            title='Inserir o valor do BTC somente com as casas fracionarias: 0025'
+          />
+          &nbsp;
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '180px' }}
+            autoFocus
+            label="Valor em Porcentagem %"
+            variant="filled"
+            type='text'
+            value={percentage}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ readOnly: true, }}
+          />
+        </Card>
+      </div>
+      <div className={styles.section}>
+        <Card variant="outlined">
+          <Typography><b>&nbsp;Conversão de BTC para BRL</b></Typography>
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '180px', background: '#00ff9d' }}
+            autoFocus
+            label="Valor em BTC"
+            variant="filled"
+            type='number'
+            onChange={(e) => setBtcNew(0 + '.' + e.target.value)}
+            InputLabelProps={{ shrink: true }}
+            title='Inserir o valor do BTC somente com as casas fracionarias: 0025'
+          />
+          &nbsp;
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '180px' }}
+            autoFocus
+            label="Valor em BRL"
+            variant="filled"
+            type='text'
+            value={brlNew}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ readOnly: true, }}
           />
         </Card>
       </div>
@@ -215,40 +289,10 @@ function App() {
             type='text'
             value={qtdCustom}
             InputLabelProps={{ shrink: true }}
-              InputProps={{readOnly: true,}}
+            InputProps={{ readOnly: true, }}
           />
         </Card>
 
-      </div>
-      <div className={styles.section}>
-        <Card variant="outlined">
-          <Typography><b>&nbsp;Conversão de BTC para BRL</b></Typography>
-          <TextField
-            className={styles.color}
-            size="small"
-            style={{ width: '180px', background: '#00ff9d' }}
-            autoFocus
-            label="Valor em BTC"
-            variant="filled"
-            type='number'
-            onChange={(e) => setBtcNew(0 + '.' + e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            title='Inserir o valor do BTC somente com as casas fracionarias: 0025'
-          />
-          &nbsp;
-          <TextField
-            className={styles.color}
-            size="small"
-            style={{ width: '180px' }}
-            autoFocus
-            label="Valor em BRL"
-            variant="filled"
-            type='text'
-            value={brlNew}
-            InputLabelProps={{ shrink: true }}
-              InputProps={{readOnly: true,}}
-          />
-        </Card>
       </div>
       <div className={styles.section}>
         <Card variant="outlined">
@@ -276,7 +320,7 @@ function App() {
               type='text'
               value={sats}
               InputLabelProps={{ shrink: true }}
-              
+
             />
             &nbsp;
             <TextField
@@ -288,7 +332,7 @@ function App() {
               type='text'
               InputLabelProps={{ shrink: true }}
               value={brl1}
-              InputProps={{readOnly: true,}}
+              InputProps={{ readOnly: true, }}
 
             />
           </div>
@@ -302,7 +346,7 @@ function App() {
               type='text'
               value={btc}
               InputLabelProps={{ shrink: true }}
-              InputProps={{readOnly: true,}}
+              InputProps={{ readOnly: true, }}
 
             />
             &nbsp;
@@ -315,7 +359,7 @@ function App() {
               type='text'
               value={btc1}
               InputLabelProps={{ shrink: true }}
-              InputProps={{readOnly: true,}}
+              InputProps={{ readOnly: true, }}
             />
           </div>
         </Card>
