@@ -31,10 +31,32 @@ function App() {
   const [btcNew, setBtcNew] = useState('' as any);
   const [brlNew, setBrlNew] = useState('' as any);
 
+  const [dataPrice, setDataPrice] = useState('' as any);
+
+  //  useEffect(() => {
+
+  //   },[]);
+
   useEffect(() => {
     setInterval(() => {
+      updateTime();
+    }, 60000);
 
-      // function updateTime(){
+    function updateTime() {
+
+      fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
+        // fetch('')
+        .then((response) => response.json())
+        .then((data) => {
+
+          setDataPrice(data.price)
+
+          const price = data.price / Math.pow(10, 3);
+
+          setCotacaoFormatado(price.toFixed(3));
+          setCotacao(price.toFixed(8));
+
+        });
 
       const now = new Date();
       const year = now.getFullYear();
@@ -42,75 +64,44 @@ function App() {
       const day = now.getDate();
       const hours = now.getHours();
       const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
 
-      const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
+      const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes /* + ':' + seconds */;
       setTime(timer)
-      // }
+    }
 
-      // updateTime();
-    }, 60000);
+    updateTime();
   }, []);
 
   useEffect(() => {
 
-    fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
-      // fetch('')
-      .then((response) => response.json())
-      .then((data) => {
+    const satsConvert = (valorBrl / parseFloat(dataPrice)) * Math.pow(10, 8);
+    const btcConvert = parseInt(valorBrl) / parseFloat(dataPrice);
 
-        // brl
-        const price = data.price / Math.pow(10, 3);
+    setSats(maskNumber(satsConvert.toFixed(0)));
+    setBtc(btcConvert.toFixed(8));
 
-        setCotacaoFormatado(price.toFixed(3));
-        setCotacao(price.toFixed(8));
+    if (valorBrl === '' || valorBrl === undefined) {
+      setSats('')
+      setBtc('')
+    }
 
-        const satsConvert = (valorBrl / parseFloat(data.price)) * Math.pow(10, 8);
-        const btcConvert = parseInt(valorBrl) / parseFloat(data.price);
+  }, [cotacaoFormatado, cotacao, valorBrl, dataPrice]);
 
-        setSats(maskNumber(satsConvert.toFixed(0)));
-        setBtc(btcConvert.toFixed(8));
+  useEffect(() => {
+    const valorEmBTC = parseInt(valorSats) / 100000000;
+    const valorEmBRL = valorEmBTC * cotacaoFormatado;
 
-        console.log("valorBrl:", valorBrl);
-        if (valorBrl === '' || valorBrl === undefined) {
+    setBrl1(currencyBrlMask((valorEmBRL * 1000)));
 
-          setSats('')
-          setBtc('')
-        }
+    const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(dataPrice)
+    setBtc1(btcConvert1.toFixed(8));
 
-        // sat
-        const valorEmBTC = parseInt(valorSats) / 100000000;
-        const valorEmBRL = valorEmBTC * cotacaoFormatado;
-
-        setBrl1(currencyBrlMask((valorEmBRL * 1000)));
-
-        const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
-        setBtc1(btcConvert1.toFixed(8));
-
-        if (valorSats === '') {
-          setBrl1('');
-          setBtc1('');
-        }
-
-      })
-
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + 1; // Os meses começam em 0
-    const day = now.getDate();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-
-    const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
-    setTime(timer)
-
-    // }
-
-    // updateBtc();
-  }, [
-    cotacaoFormatado, cotacao,
-    valorBrl,
-    valorSats
-  ]);
+    if (valorSats === '') {
+      setBrl1('');
+      setBtc1('');
+    }
+  }, [cotacaoFormatado, cotacao, valorSats, dataPrice]);
 
   useEffect(() => {
     let newBtc = 0.0;
@@ -129,9 +120,7 @@ function App() {
     if (btcLenght === 2 || btcLenght === 3 || btcLenght === 6)
       setQtdCustom(maskNumber(handleUnDot(newVlrSats)));
 
-  }, [
-    btcCustom, brlCustom, qtdCustom
-  ]);
+  }, [btcCustom, brlCustom, qtdCustom]);
 
   useEffect(() => {
     const vlr = (((btcNew * cotacaoFormatado) * Math.pow(10, 5)).toFixed(0))
@@ -142,7 +131,6 @@ function App() {
   }, [btcNew, cotacaoFormatado]);
 
   useEffect(() => {
-
     const toFixedBtc = parseInt(cotacaoFormatado)
     const percent = ((toFixedBtc - btcPercentage) / toFixedBtc) * 100;
 
@@ -153,7 +141,7 @@ function App() {
 
   }, [cotacaoFormatado, btcPercentage]);
 
-  
+
   // useEffect(() => {
 
   // },[]);
