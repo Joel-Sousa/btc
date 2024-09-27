@@ -64,7 +64,6 @@ function App() {
       const day = now.getDate();
       const hours = now.getHours();
       const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
 
       const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
       setTime(timer)
