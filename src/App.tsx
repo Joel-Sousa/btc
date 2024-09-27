@@ -31,10 +31,10 @@ function App() {
   const [btcNew, setBtcNew] = useState('' as any);
   const [brlNew, setBrlNew] = useState('' as any);
 
- useEffect(() => {
-  setInterval(() => {
+  useEffect(() => {
+    setInterval(() => {
 
-    // function updateTime(){
+      // function updateTime(){
 
       const now = new Date();
       const year = now.getFullYear();
@@ -42,64 +42,66 @@ function App() {
       const day = now.getDate();
       const hours = now.getHours();
       const minutes = now.getMinutes();
-      
+
       const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
       setTime(timer)
-    // }
+      // }
 
-    // updateTime();
-  }, 60000);
-  },[]);
+      // updateTime();
+    }, 60000);
+  }, []);
 
   useEffect(() => {
 
-      if (!valorBrl) setValorSats(0);
-      if (!valorSats) setValorSats(0);
+    fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
+      // fetch('')
+      .then((response) => response.json())
+      .then((data) => {
 
-      fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
-        // fetch('')
-        .then((response) => response.json())
-        .then((data) => {
+        // brl
+        const price = data.price / Math.pow(10, 3);
 
-          // brl
-          const price = data.price / Math.pow(10, 3);
+        setCotacaoFormatado(price.toFixed(3));
+        setCotacao(price.toFixed(8));
 
-          setCotacaoFormatado(price.toFixed(3));
-          setCotacao(price.toFixed(8));
+        const satsConvert = (valorBrl / parseFloat(data.price)) * Math.pow(10, 8);
+        const btcConvert = parseInt(valorBrl) / parseFloat(data.price);
 
-          const satsConvert = (valorBrl / parseFloat(data.price)) * Math.pow(10, 8);
-          const btcConvert = parseInt(valorBrl) / parseFloat(data.price);
+        setSats(maskNumber(satsConvert.toFixed(0)));
+        setBtc(btcConvert.toFixed(8));
 
-          setSats(maskNumber(satsConvert.toFixed(0)));
-          setBtc(btcConvert.toFixed(8));
+        console.log("valorBrl:", valorBrl);
+        if (valorBrl == '' || valorBrl == undefined) {
 
-          console.log("valorBrl:", valorBrl);
-          if(valorBrl == '' || valorBrl == undefined){
+          setSats('')
+          setBtc('')
+        }
 
-            setSats('')
-            setBtc('')
-          }
+        // sat
+        const valorEmBTC = parseInt(valorSats) / 100000000;
+        const valorEmBRL = valorEmBTC * cotacaoFormatado;
 
-          // sat
-          const valorEmBTC = valorSats / 100000000;
-          const valorEmBRL = valorEmBTC * cotacaoFormatado;
+        setBrl1(currencyBrlMask((valorEmBRL * 1000)));
 
-          setBrl1(currencyBrlMask((valorEmBRL * 1000)));
+        const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
+        setBtc1(btcConvert1.toFixed(8));
 
-          const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
-          setBtc1(btcConvert1.toFixed(8))
+        if (valorSats == '') {
+          setBrl1('');
+          setBtc1('');
+        }
 
-        })
+      })
 
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth() + 1; // Os meses começam em 0
-      const day = now.getDate();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // Os meses começam em 0
+    const day = now.getDate();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
 
-      const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
-      setTime(timer)
+    const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
+    setTime(timer)
 
     // }
 
@@ -151,6 +153,7 @@ function App() {
 
   }, [cotacaoFormatado, btcPercentage]);
 
+  
   // useEffect(() => {
 
   // },[]);
@@ -350,7 +353,7 @@ function App() {
             variant="filled"
             type='number'
             // onChange={(e) => setValorSats(handleUnDot(e.target.value))}
-            onChange={(e) => setValorSats(handleUnDot(e.target.value))}
+            onChange={(e) => setValorSats(e.target.value)}
             InputLabelProps={{ shrink: true }}
             title='Insira o valor em Sats para converter'
           />
