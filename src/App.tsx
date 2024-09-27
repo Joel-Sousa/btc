@@ -71,7 +71,7 @@ function App() {
         setBtc(btcConvert.toFixed(8));
 
         console.log("valorBrl:", valorBrl);
-        if (valorBrl == '' || valorBrl == undefined) {
+        if (valorBrl === '' || valorBrl === undefined) {
 
           setSats('')
           setBtc('')
@@ -86,7 +86,7 @@ function App() {
         const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
         setBtc1(btcConvert1.toFixed(8));
 
-        if (valorSats == '') {
+        if (valorSats === '') {
           setBrl1('');
           setBtc1('');
         }
