@@ -18,7 +18,8 @@ function App() {
   const [btc1, setBtc1] = useState('' as any);
   const [brl1, setBrl1] = useState('' as any);
 
-  const [valorBrlSats, setValorBrlSats] = useState('' as any);
+  const [valorBrl, setValorBrl] = useState('' as any);
+  const [valorSats, setValorSats] = useState('' as any);
 
   const [btcPercentage, setBtcPercentage] = useState('' as any);
   const [percentage, setPercentage] = useState('' as any);
@@ -30,44 +31,64 @@ function App() {
   const [btcNew, setBtcNew] = useState('' as any);
   const [brlNew, setBrlNew] = useState('' as any);
 
+ useEffect(() => {
+  setInterval(() => {
+
+    // function updateTime(){
+
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1; // Os meses começam em 0
+      const day = now.getDate();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      
+      const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
+      setTime(timer)
+    // }
+
+    // updateTime();
+  }, 60000);
+  },[]);
+
   useEffect(() => {
 
-    // if (!brl1) setBrl1(0);
-
-    setInterval(() => {
-      // console.log('1');
-      updateBtc();
-    }, 60000);
-
-    function updateBtc() {
-      if (!valorBrlSats) setValorBrlSats(0);
+      if (!valorBrl) setValorSats(0);
+      if (!valorSats) setValorSats(0);
 
       fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCBRL')
         // fetch('')
         .then((response) => response.json())
         .then((data) => {
 
-          // sats
+          // brl
           const price = data.price / Math.pow(10, 3);
-          // console.log("data.price:", data.price);
 
           setCotacaoFormatado(price.toFixed(3));
           setCotacao(price.toFixed(8));
 
-          const satsConvert = (valorBrlSats / parseFloat(data.price)) * Math.pow(10, 8);
-          const btcConvert = parseInt(valorBrlSats) / parseFloat(data.price);
+          const satsConvert = (valorBrl / parseFloat(data.price)) * Math.pow(10, 8);
+          const btcConvert = parseInt(valorBrl) / parseFloat(data.price);
 
           setSats(maskNumber(satsConvert.toFixed(0)));
           setBtc(btcConvert.toFixed(8));
 
-          // brl
-          const valorEmBTC = valorBrlSats / 100000000;
+          console.log("valorBrl:", valorBrl);
+          if(valorBrl == '' || valorBrl == undefined){
+
+            setSats('')
+            setBtc('')
+          }
+
+          // sat
+          const valorEmBTC = valorSats / 100000000;
           const valorEmBRL = valorEmBTC * cotacaoFormatado;
 
           setBrl1(currencyBrlMask((valorEmBRL * 1000)));
 
           const btcConvert1 = parseInt((valorEmBRL * 1000).toFixed(2)) / parseFloat(data.price)
           setBtc1(btcConvert1.toFixed(8))
+
         })
 
       const now = new Date();
@@ -80,12 +101,13 @@ function App() {
       const timer = day + '/' + month + '/' + year + ' | ' + hours + ':' + minutes;
       setTime(timer)
 
-    }
+    // }
 
-    updateBtc();
+    // updateBtc();
   }, [
     cotacaoFormatado, cotacao,
-    valorBrlSats,
+    valorBrl,
+    valorSats
   ]);
 
   useEffect(() => {
@@ -127,7 +149,11 @@ function App() {
     else
       setPercentage(percent.toFixed(2) + '%');
 
-  }, [cotacaoFormatado, btcPercentage])
+  }, [cotacaoFormatado, btcPercentage]);
+
+  // useEffect(() => {
+
+  // },[]);
 
   function maskNumber(num: number | string, separator: string = '.'): string {
     let numStr = num.toString();
@@ -206,7 +232,7 @@ function App() {
             type='number'
             onChange={(e) => setBtcPercentage(e.target.value)}
             InputLabelProps={{ shrink: true }}
-            title='Inserir o valor do BTC somente com as casas fracionarias: 0025'
+            title='Inserir o valor do BTC '
           />
           &nbsp;
           <TextField
@@ -220,6 +246,7 @@ function App() {
             value={percentage}
             InputLabelProps={{ shrink: true }}
             InputProps={{ readOnly: true, }}
+            title='Diferença em porcentagen entre o valor da contação atual e o Inseridos'
           />
         </Card>
       </div>
@@ -297,19 +324,37 @@ function App() {
       <div className={styles.section}>
         <Card variant="outlined">
           <Typography><b>&nbsp;Conversão de BRL ou Sats </b></Typography>
+
           <TextField
             className={styles.color}
             size="small"
-            style={{ width: '360px', background: '#00ff9d' }}
+            style={{ width: '180px', background: '#00ff9d' }}
             autoFocus
             fullWidth
-            label="Valor em BRL ou Sats"
+            label="Valor em BRL"
             variant="filled"
             type='number'
-            onChange={(e) => setValorBrlSats(handleUnDot(e.target.value))}
+            // onChange={(e) => setValorBrl(handleUnDot(e.target.value))}
+            onChange={(e) => setValorBrl(handleUnDot(e.target.value))}
             InputLabelProps={{ shrink: true }}
-            title='Insira o valor em BRL ou em Sats para converter'
+            title='Insira o valor em BRL'
           />
+          &nbsp;
+          <TextField
+            className={styles.color}
+            size="small"
+            style={{ width: '180px', background: '#00ff9d' }}
+            autoFocus
+            fullWidth
+            label="Valor em Sats"
+            variant="filled"
+            type='number'
+            // onChange={(e) => setValorSats(handleUnDot(e.target.value))}
+            onChange={(e) => setValorSats(handleUnDot(e.target.value))}
+            InputLabelProps={{ shrink: true }}
+            title='Insira o valor em Sats para converter'
+          />
+
           <div className={styles.section}>
             <TextField
               className={styles.color}
