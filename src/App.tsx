@@ -222,7 +222,7 @@ function App() {
             type='number'
             onChange={(e) => setBtcPercentage(e.target.value)}
             InputLabelProps={{ shrink: true }}
-            title='Inserir o valor do BTC '
+            title='Inserir o valor do BTC Ex: 330'
           />
           &nbsp;
           <TextField
@@ -253,7 +253,7 @@ function App() {
             type='number'
             onChange={(e) => setBtcNew(0 + '.' + e.target.value)}
             InputLabelProps={{ shrink: true }}
-            title='Inserir o valor do BTC somente com as casas fracionarias: 0025'
+            title='Inserir o valor do BTC somente com as casas fracionarias Ex: 0025'
           />
           &nbsp;
           <TextField
@@ -282,7 +282,7 @@ function App() {
             type='number'
             onChange={(e) => setBtcCustom(handleUnDot(e.target.value))}
             InputLabelProps={{ shrink: true }}
-            title='Insira uma Cotação do BTC qualquer'
+            title='Insira uma Cotação do BTC qualquer Ex: 300'
           />
           &nbsp;
           <TextField
@@ -294,7 +294,7 @@ function App() {
             type='number'
             onChange={(e) => setBrlCustom(handleUnDot(e.target.value))}
             InputLabelProps={{ shrink: true }}
-            title='Insira a Quantidade em BRL'
+            title='Insira a Quantidade em BRL Ex: 1000'
           />
           &nbsp;
           <TextField
@@ -334,7 +334,6 @@ function App() {
             className={styles.color}
             size="small"
             style={{ width: '180px', background: '#00ff9d' }}
-            autoFocus
             fullWidth
             label="Valor em Sats"
             variant="filled"
