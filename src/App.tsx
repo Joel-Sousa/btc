@@ -216,7 +216,6 @@ function App() {
             className={styles.color}
             size="small"
             style={{ width: '180px', background: '#00ff9d' }}
-            autoFocus
             label="Valor em BTC"
             variant="filled"
             type='number'
@@ -229,7 +228,6 @@ function App() {
             className={styles.color}
             size="small"
             style={{ width: '180px' }}
-            autoFocus
             label="Valor em Porcentagem %"
             variant="filled"
             type='text'
@@ -247,7 +245,6 @@ function App() {
             className={styles.color}
             size="small"
             style={{ width: '180px', background: '#00ff9d' }}
-            autoFocus
             label="Valor em BTC"
             variant="filled"
             type='number'
@@ -260,7 +257,6 @@ function App() {
             className={styles.color}
             size="small"
             style={{ width: '180px' }}
-            autoFocus
             label="Valor em BRL"
             variant="filled"
             type='text'
@@ -319,7 +315,6 @@ function App() {
             className={styles.color}
             size="small"
             style={{ width: '180px', background: '#00ff9d' }}
-            autoFocus
             fullWidth
             label="Valor em BRL"
             variant="filled"
@@ -327,7 +322,7 @@ function App() {
             // onChange={(e) => setValorBrl(handleUnDot(e.target.value))}
             onChange={(e) => setValorBrl(handleUnDot(e.target.value))}
             InputLabelProps={{ shrink: true }}
-            title='Insira o valor em BRL'
+            title='Insira o valor em BRL Ex: 1000'
           />
           &nbsp;
           <TextField
@@ -341,7 +336,7 @@ function App() {
             // onChange={(e) => setValorSats(handleUnDot(e.target.value))}
             onChange={(e) => setValorSats(e.target.value)}
             InputLabelProps={{ shrink: true }}
-            title='Insira o valor em Sats para converter'
+            title='Insira o valor em Sats para converter Ex:?1000'
           />
 
           <div className={styles.section}>
